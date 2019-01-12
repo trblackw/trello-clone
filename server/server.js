@@ -4,7 +4,7 @@ const express = require("express"),
   path = require("path"),
   cors = require("cors"),
   connect = require("./utils/db"),
-const { json, urlencoded } = require("body-parser");
+  { json, urlencoded } = require("body-parser");
 
 const userRoutes = require("./api/routes/user");
 
