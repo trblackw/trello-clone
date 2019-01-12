@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-   "test": "jest --watch --env=jsdom",
-   "client": "cd client && npm start",
-   "start": "nodemon server/server.js",
-   "server": "nodemon server/server.js",
-   "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "test": "jest --watch --env=jsdom",
+    "client": "cd client && npm start",
+    "start": "nodemon server/server.js",
+    "server": "nodemon server/server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
