@@ -2,8 +2,12 @@ import { REGISTER_USER, LOGIN_USER, LOGOUT_USER } from "./constants";
 
 const initialState = {
   currentUser: localStorage.getItem("authenticated-user") || "",
-  token: localStorage.getItem("authenticated-user").token || "",
-  username: localStorage.getItem("authenticated-user").username || "",
+  token: localStorage.getItem("authenticated-user")
+    ? localStorage.getItem("authenticated-user").token
+    : "",
+  username: localStorage.getItem("authenticated-user")
+    ? localStorage.getItem("authenticated-user").username
+    : "",
   errorMessage: ""
 };
 
@@ -26,7 +30,7 @@ const UserReducer = (state = initialState, action) => {
         "color: yellow; font-weight: bold"
       );
       return success
-        ? { ...state, currentUser: registeredUser, token, username }
+        ? { ...state, newUser: true }
         : { ...state, errorMessage: message };
     case LOGIN_USER:
       console.log(
@@ -34,7 +38,13 @@ const UserReducer = (state = initialState, action) => {
         "color: teal; font-weight: bold"
       );
       return success
-        ? { ...state, currentUser: loggedInUser, token, username }
+        ? {
+            ...state,
+            currentUser: loggedInUser,
+            token,
+            username,
+            newUser: false
+          }
         : { ...state, errorMessage: message };
     case LOGOUT_USER:
       console.log(
