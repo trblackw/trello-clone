@@ -56,26 +56,30 @@ router.post("/login", async ({ body: { username, password } }, res, next) => {
     return next();
   }
   bcrypt.compare(password, user.password, (error, result) => {
-     if (error) {
-       res.status(401).send({
-         message: "AUTH FAILED -- invalid username & password combo",
-         error
-       });
-       return next();
-     }
+    if (error) {
+      res.status(401).send({
+        message: "AUTH FAILED -- invalid username & password combo",
+        success: false,
+        error
+      });
+      return next();
+    }
     if (result) {
       const token = jwt.sign(
-        { username: user.username, userID: username._id },
+        { username: user.username, _id: username._id },
         secrets.jwt,
         { expiresIn: secrets.jwtExp }
       );
       return token
         ? res.status(200).json({
             message: "Successful login",
-            token
+            success: true,
+            token,
+            user
           })
         : res.status(401).json({
-            message: "Failure to login"
+            message: "Failure to login",
+            success: false
           });
     }
   });
