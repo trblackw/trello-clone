@@ -9,13 +9,13 @@ const Login = () => {
     username: "",
     password: ""
   });
-  const { dispatch, currentUser } = useContext(UserContext);
+  const { dispatch, currentUser, newUser } = useContext(UserContext);
 
   useEffect(
     () => {
-      if (currentUser.username) navigate(`/user/${currentUser._id}`);
+      if (user.username) navigate(`/user/${currentUser._id}`);
     },
-    [currentUser]
+    [currentUser._id]
   );
 
   const handleInput = e => {
@@ -25,12 +25,11 @@ const Login = () => {
   const handleSubmit = e => {
     e.preventDefault();
     loginUser(user, dispatch);
-    //  navigate(`/user/${currentUser._id}`);
   };
 
   return (
     <div className="w-full max-w-md mx-auto my-6">
-      <h3 className="text-4xl text-center mb-3">Trello-clone</h3>
+      <h3 className="text-4xl text-center mb-3 text-blue-dark">Trello-clone</h3>
       <form
         className="bg-blue shadow-lg rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={e => handleSubmit(e)}
