@@ -12,21 +12,21 @@ export const registerUser = async (user, dispatch) => {
       },
       redirect: "follow",
       referrer: "no-referrer",
-      body: JSON.stringify({
-        username,
-        email,
-        password
-      })
+      body: JSON.stringify({ username, email, password })
     });
-    const { token, success, user: registerUser } = await registerRes.json();
+    const { token, success, user: registeredUser } = await registerRes.json();
     if (success) {
-      dispatch({ type: REGISTER_USER, registerUser, success });
+      dispatch({ type: REGISTER_USER, registeredUser, success });
       console.log(
         `${user.username}'s account was REGISTERED and set in localstorage`
       );
       return localStorage.setItem(
         "authenticated-user",
-        JSON.stringify({ token, username: registerUser.username })
+        JSON.stringify({
+          token,
+          username: registeredUser.username,
+          id: registeredUser._id
+        })
       );
     }
   } catch (error) {
@@ -47,10 +47,7 @@ export const loginUser = async (user, dispatch) => {
       },
       redirect: "follow",
       referrer: "no-referrer",
-      body: JSON.stringify({
-        username,
-        password
-      })
+      body: JSON.stringify({ username, password })
     });
     const { token, success, user: loggedInUser } = await loginRes.json();
     if (success) {
@@ -60,7 +57,11 @@ export const loginUser = async (user, dispatch) => {
       );
       return localStorage.setItem(
         "authenticated-user",
-        JSON.stringify({ token, username: registerUser.username })
+        JSON.stringify({
+          token,
+          username: loggedInUser.username,
+          id: loggedInUser._id
+        })
       );
     }
   } catch (error) {

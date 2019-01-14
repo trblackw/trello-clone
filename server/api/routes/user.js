@@ -38,7 +38,9 @@ router.post(
           if (error) return res.status(500).json({ error });
           if (user)
             return res.status(201).json({
-              message: `${user.username}'s account was successfully created`
+              message: `${user.username}'s account was successfully created`,
+              success: true,
+              user
             });
         }
       );

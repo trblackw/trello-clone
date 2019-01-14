@@ -1,13 +1,13 @@
 import { REGISTER_USER, LOGIN_USER, LOGOUT_USER } from "./constants";
 
 const initialState = {
-  currentUser: localStorage.getItem("authenticated-user") || "",
-  token: localStorage.getItem("authenticated-user")
-    ? localStorage.getItem("authenticated-user").token
-    : "",
-  username: localStorage.getItem("authenticated-user")
-    ? localStorage.getItem("authenticated-user").username
-    : "",
+  currentUser: localStorage.getItem("authenticated-user") || {},
+//   token: localStorage.getItem("authenticated-user")
+//     ? localStorage.getItem("authenticated-user").token
+//     : "",
+//   username: localStorage.getItem("authenticated-user")
+//     ? localStorage.getItem("authenticated-user").username
+//     : "",
   errorMessage: ""
 };
 
@@ -26,7 +26,7 @@ const UserReducer = (state = initialState, action) => {
       console.log(
         `%c {type: REGISTER_USER, registeredUser: ${JSON.stringify(
           registeredUser
-        )}} `,
+        )}}`,
         "color: yellow; font-weight: bold"
       );
       return success
@@ -34,7 +34,7 @@ const UserReducer = (state = initialState, action) => {
         : { ...state, errorMessage: message };
     case LOGIN_USER:
       console.log(
-        `%c {type: LOGIN_USER, loggedInUser: ${JSON.stringify(loggedInUser)}} `,
+        `%c {type: LOGIN_USER, loggedInUser: ${JSON.stringify(loggedInUser)}}`,
         "color: teal; font-weight: bold"
       );
       return success
