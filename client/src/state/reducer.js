@@ -2,12 +2,6 @@ import { REGISTER_USER, LOGIN_USER, LOGOUT_USER } from "./constants";
 
 const initialState = {
   currentUser: localStorage.getItem("authenticated-user") || {},
-//   token: localStorage.getItem("authenticated-user")
-//     ? localStorage.getItem("authenticated-user").token
-//     : "",
-//   username: localStorage.getItem("authenticated-user")
-//     ? localStorage.getItem("authenticated-user").username
-//     : "",
   errorMessage: ""
 };
 
