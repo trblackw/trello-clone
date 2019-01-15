@@ -20,6 +20,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     dispatch({ type: LOGOUT_USER });
+    localStorage.clear();
     navigate("/");
   };
 
@@ -30,9 +31,9 @@ const Nav = () => {
     >
       <div className="flex items-center flex-no-shrink text-white mr-6">
         {/* <Link to="/"> */}
-          <span className="font-semibold text-3xl tracking-tight">
-            Trello-clone
-          </span>
+        <span className="font-semibold text-3xl tracking-tight">
+          Trello-clone
+        </span>
         {/* </Link> */}
       </div>
       <div className="block lg:hidden">
