@@ -1,17 +1,21 @@
 const mongoose = require("mongoose"),
+  Schema = mongoose.Schema,
   Joi = require("joi");
 
-const taskSchema = mongoose.Schema(
+const taskSchema = new Schema(
   {
-    _id: mongoose.Schema.Types.ObjectId,
+    _id: Schema.Types.ObjectId,
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true
     },
+    priority: {
+      type: String
+    },
     assigned: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
       }
     ]
@@ -21,13 +25,19 @@ const taskSchema = mongoose.Schema(
 
 const Task = mongoose.model("Task", taskSchema);
 
-module.exports = Task;
 
-// const validateTask = task => {
-//    const { author, assigned, _id } = task;
+const validateTask = task => {
+   if (!mongoose.Types.ObjectId.isValid(task._id)) {
+      throw new Error("Invalid task id");
+   }
+   const schema = {
+      priority: Joi.string()
+      .alphanum()
+      .min(2)
+      .max(20)
+   };
+   
+   return Joi.validate(task, schema);
+};
 
-// };
-
-// if (!mongoose.Types.ObjectId.isValid(req.body.id)) {
-//    return res.status(400).send("Invalid object id");
-// }
+module.exports = { Task, validateTask };

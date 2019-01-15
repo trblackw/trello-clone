@@ -1,8 +1,9 @@
 const mongoose = require("mongoose"),
+  Schema = mongoose.Schema,
   Joi = require("joi");
 
-const userSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+const userSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   username: {
     type: String,
     required: true,
@@ -14,6 +15,16 @@ const userSchema = mongoose.Schema({
     unique: true,
     match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
+  organization: {
+    type: String,
+    default: "Project Shift"
+  },
+  boards: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Board"
+    }
+  ],
   password: { type: String, required: true }
 });
 
@@ -33,7 +44,12 @@ const validateUser = user => {
       .alphanum()
       .min(6)
       .max(20)
-      .required()
+      .required(),
+    organization: Joi.string()
+      .alphanum()
+      .min(3)
+      .max(30),
+    boards: Joi.array()
   };
   return Joi.validate(user, schema);
 };
