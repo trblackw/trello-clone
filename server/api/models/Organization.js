@@ -1,9 +1,12 @@
 const mongoose = require("mongoose"),
-  Schema = mongoose.Schema,
-  Joi = require("joi");
+  Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
-  _id: Schema.Types.ObjectId,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   boards: [
     {
       type: Schema.Types.ObjectId,
