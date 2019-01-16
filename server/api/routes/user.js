@@ -1,8 +1,8 @@
 const router = require("express").Router(),
-  mongoose = require("mongoose"),
+  {Types} = require("mongoose"),
   bcrypt = require("bcrypt"),
-  { secrets } = require("../../config/keys"),
-  jwt = require("jsonwebtoken");
+  { Task, validateTask } = require("../models/Task"),
+  { verifyToken, newToken } = require("../../utils/token");
 
 //user model
 const { User, validateUser } = require("../models/User");
@@ -14,7 +14,6 @@ router.post(
     let user = await User.findOne({ email }).exec();
     //check to make sure user doesn't already exist
     if (user) return res.status(409).json({ message: "Email already exists" });
-
     //validate user input fields
     const { error } = validateUser({ username, email, password });
     if (error) {
@@ -22,28 +21,28 @@ router.post(
       return next();
     }
     //all is well, hash the new user's password
-    bcrypt.hash(password, 10, (error, hash) => {
+    bcrypt.hash(password, 10, async (error, hash) => {
       if (error) {
         res.status(500).json({ error });
         return next();
       }
-      User.create(
-        {
-          _id: new mongoose.Types.ObjectId(),
+      try {
+        user = await User.create({
           username,
           email,
           password: hash
-        },
-        (error, user) => {
-          if (error) return res.status(500).json({ error });
-          if (user)
-            return res.status(201).json({
-              message: `${user.username}'s account was successfully created`,
-              success: true,
-              user
-            });
+        });
+        if (user) {
+          res.status(201).json({
+            message: `${user.username}'s account was successfully created`,
+            success: true,
+            user
+          });
         }
-      );
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error });
+      }
     });
   }
 );
@@ -67,11 +66,7 @@ router.post("/login", async ({ body: { username, password } }, res, next) => {
       return next();
     }
     if (result) {
-      const token = jwt.sign(
-        { username: user.username, _id: username._id },
-        secrets.jwt,
-        { expiresIn: secrets.jwtExp }
-      );
+      const token = newToken(user);
       return token
         ? res.status(200).json({
             message: "Successful login",
@@ -84,6 +79,24 @@ router.post("/login", async ({ body: { username, password } }, res, next) => {
             success: false
           });
     }
+  });
+});
+
+router.get("/:id", verifyToken, async (req, res, next) => {
+  const { id } = req.params;
+  let user = await User.findById(id);
+
+  if (!user) {
+    res.status(400).json({
+      message: "Unable to find user account",
+      success: false
+    });
+    return next();
+  }
+  res.json({
+    message: "found the user",
+    success: true,
+    user
   });
 });
 
