@@ -4,7 +4,15 @@ const mongoose = require("mongoose"),
 
 const boardSchema = new Schema(
   {
-    _id: Schema.Types.ObjectId,
+    organization: {
+      type: Schema.Types.ObjectId,
+      ref: "Organization"
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
     columns: [
       {
         type: Schema.Types.ObjectId,

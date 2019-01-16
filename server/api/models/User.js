@@ -3,7 +3,6 @@ const mongoose = require("mongoose"),
   Joi = require("joi");
 
 const userSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   username: {
     type: String,
     required: true,
@@ -19,12 +18,6 @@ const userSchema = new Schema({
     type: String,
     default: "Project Shift"
   },
-  boards: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Board"
-    }
-  ],
   password: { type: String, required: true }
 });
 
@@ -48,8 +41,7 @@ const validateUser = user => {
     organization: Joi.string()
       .alphanum()
       .min(3)
-      .max(30),
-    boards: Joi.array()
+      .max(30)
   };
   return Joi.validate(user, schema);
 };

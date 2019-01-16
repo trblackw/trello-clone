@@ -4,7 +4,6 @@ const mongoose = require("mongoose"),
 
 const columnSchema = new Schema(
   {
-    _id: Schema.Types.ObjectId,
     title: {
       type: String,
       required: true

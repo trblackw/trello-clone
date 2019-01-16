@@ -4,7 +4,6 @@ const mongoose = require("mongoose"),
 
 const taskSchema = new Schema(
   {
-    _id: Schema.Types.ObjectId,
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
