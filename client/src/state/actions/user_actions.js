@@ -1,5 +1,11 @@
-import { REGISTER_USER, LOGIN_USER, ERROR } from "./constants";
+import {
+  REGISTER_USER,
+  LOGIN_USER,
+  ERROR,
+  FETCH_USER_BOARD
+} from "../constants";
 
+//user registration
 export const registerUser = async (user, dispatch) => {
   const { username, email, password } = user;
   try {
@@ -35,6 +41,7 @@ export const registerUser = async (user, dispatch) => {
   }
 };
 
+//user login
 export const loginUser = async (user, dispatch) => {
   const { username, password } = user;
   try {
@@ -60,7 +67,8 @@ export const loginUser = async (user, dispatch) => {
         JSON.stringify({
           token,
           username: loggedInUser.username,
-          id: loggedInUser._id
+          id: loggedInUser._id,
+          organization: loggedInUser.organization
         })
       );
     }
@@ -69,3 +77,26 @@ export const loginUser = async (user, dispatch) => {
     return dispatch({ type: ERROR, message: error.message });
   }
 };
+
+//fetch user boards after user login
+// export const fetchUserBoard = async dispatch => {
+//   const { token, id } = JSON.parse(localStorage.getItem("authenticated-user"));
+//   if (token && id) {
+//     try {
+//       const res = await fetch(`http://localhost:8080/user/${id}`, {
+//         mode: "cors",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`
+//         }
+//       });
+//       const {
+//         success,
+//         user: { boards }
+//       } = await res.json();
+//       dispatch({ type: FETCH_USER_BOARD, success, boards });
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+// };

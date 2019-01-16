@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { navigate } from "@reach/router";
-import { registerUser } from "../state/actions";
+import { registerUser } from "../state/actions/user_actions";
 import { useContext } from "react";
 import UserContext from "../state/context";
 

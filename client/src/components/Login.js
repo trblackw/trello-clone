@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
 import { useContext } from "react";
-import { loginUser } from "../state/actions";
+import { loginUser } from "../state/actions/user_actions";
 import UserContext from "../state/context";
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
     username: "",
     password: ""
   });
-  const { dispatch, currentUser, newUser } = useContext(UserContext);
+  const { dispatch, currentUser } = useContext(UserContext);
 
   useEffect(
     () => {
