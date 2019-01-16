@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
   if (token) {
     jwt.verify(token, secrets.jwt, (err, decoded) => {
       if (err) {
-        return res.json({
+        return res.status(403).json({
           success: false,
           message: "invalid token"
         });
@@ -32,7 +32,7 @@ const verifyToken = (req, res, next) => {
       }
     });
   } else {
-    return res.json({
+    return res.status(403).json({
       success: false,
       message: "Auth token not supplied"
     });
