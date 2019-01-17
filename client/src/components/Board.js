@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../state/context";
 import initialData from "./drag&drop/data";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -7,8 +7,9 @@ import styled from "styled-components";
 import { onDragEnd, onDragStart, onDragUpdate } from "./drag&drop/utils";
 
 const Landing = () => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, dispatch } = useContext(UserContext);
   const [state, setState] = useState(initialData);
+  const [boards, setBoards] = useState([]);
 
   return (
     <>
