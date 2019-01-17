@@ -7,6 +7,7 @@ const express = require("express"),
   { json, urlencoded } = require("body-parser");
 
 const userRoutes = require("./api/routes/user");
+const boardRoutes = require("./api/routes/board");
 
 mongoose.promise = global.Promise;
 mongoose.set("debug", true);
@@ -35,19 +36,7 @@ app.use((req, res, next) => {
 
 //configure routes
 app.use("/user", userRoutes);
-
-// app.use((req, res, next) => {
-//   const error = new Error("Not found");
-//   error.status = 404;
-//   next(error);
-// });
-
-// app.use((error, req, res, next) => {
-//   res.status(error.status || 500);
-//   res.json({
-//     error: { message: error.message }
-//   });
-// });
+app.use("/user/:id/boards", boardRoutes);
 
 const port = process.env.PORT || 8080;
 
