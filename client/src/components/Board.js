@@ -6,10 +6,15 @@ import Column from "./drag&drop/Column";
 import styled from "styled-components";
 import { onDragEnd, onDragStart, onDragUpdate } from "./drag&drop/utils";
 
-const Landing = () => {
-  const { currentUser, dispatch } = useContext(UserContext);
+const Board = ({ boardId }) => {
+  const { currentUser, boards, dispatch } = useContext(UserContext);
   const [state, setState] = useState(initialData);
-  const [boards, setBoards] = useState([]);
+  const [board, setBoard] = useState({});
+
+  useEffect(() => {
+    let board = boards.find(board => board._id === boardId);
+    setBoard(board);
+  }, []);
 
   return (
     <>
@@ -21,7 +26,7 @@ const Landing = () => {
           </h3>
         </header>
       </Header>
-      <LandingContainer className="border-solid border-blue">
+      <BoardContainer className="border-solid border-blue">
         <DragDropContext
           onDragEnd={result => onDragEnd(result, state, setState)}
           onDragUpdate={destination => onDragUpdate(destination, state)}
@@ -33,14 +38,14 @@ const Landing = () => {
             return <Column key={column.id} column={column} task={tasks} />;
           })}
         </DragDropContext>
-      </LandingContainer>
+      </BoardContainer>
     </>
   );
 };
 
-export default Landing;
+export default Board;
 
-const LandingContainer = styled("div")`
+const BoardContainer = styled("div")`
   padding: 1em;
   margin: 0 auto;
   display: flex;
