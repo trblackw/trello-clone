@@ -50,18 +50,18 @@ const Nav = () => {
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          <Link
+          {/* <Link
             to="#responsive-header"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4"
           >
             Docs
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             to="#responsive-header"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4"
           >
             Examples
-          </Link>
+          </Link> */}
           {!user && (
             <Link
               to="/login"
