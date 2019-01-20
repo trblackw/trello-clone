@@ -1,11 +1,24 @@
 const router = require("express").Router(),
-  {Types} = require("mongoose"),
+  { Types } = require("mongoose"),
   bcrypt = require("bcrypt"),
+  { Column } = require("../models/Column"),
+  Label = require("../models/Label"),
+  { Board } = require("../models/Board"),
   { Task, validateTask } = require("../models/Task"),
   { verifyToken, newToken } = require("../../utils/token");
 
 //user model
 const { User, validateUser } = require("../models/User");
+
+//temporary route to generate some data
+router.get("/generatedata", async (req, res, next) => {
+  Label.aggregate([{ $match: { title: /backlog/i } }], (err, columns) => {
+    if (err) throw err;
+    res.json({
+      columns
+    });
+  });
+});
 
 //register new users
 router.post(
