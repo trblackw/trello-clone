@@ -12,7 +12,7 @@ export const fetchBoards = async (user, dispatch) => {
     });
     const { success, boards } = await res.json();
     if (success) {
-      console.log(boards);
+      console.log(JSON.stringify(boards));
       return dispatch({ type: FETCH_BOARDS, boards });
     }
   } catch (error) {
