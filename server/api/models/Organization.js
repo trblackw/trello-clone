@@ -1,4 +1,5 @@
 const mongoose = require("mongoose"),
+  uniqueValidator = require("mongoose-unique-validator"),
   Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
@@ -20,6 +21,8 @@ const organizationSchema = new Schema({
     }
   ]
 });
+
+organizationSchema.plugin(uniqueValidator)
 
 const Organization = mongoose.model("Organization", organizationSchema);
 
