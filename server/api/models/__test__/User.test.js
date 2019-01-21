@@ -1,4 +1,4 @@
-const User = require("../user");
+const User = require("../User");
 //TODO: test for unique username
 describe("User model", () => {
   test("username is required", async () => {
