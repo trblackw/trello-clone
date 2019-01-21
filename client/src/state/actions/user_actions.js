@@ -1,9 +1,4 @@
-import {
-  REGISTER_USER,
-  LOGIN_USER,
-  ERROR,
-  FETCH_USER_BOARD
-} from "../constants";
+import { REGISTER_USER, LOGIN_USER, ERROR } from "../constants";
 
 //user registration
 export const registerUser = async (user, dispatch) => {
