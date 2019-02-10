@@ -1,3 +1,8 @@
+const fetchDnDData = async user => {
+  const { id } = user;
+  const res = await fetch("");
+};
+
 const initialData = {
   tasks: {
     "task-1": { id: "task-1", content: "go to store" },
