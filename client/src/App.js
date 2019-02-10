@@ -21,7 +21,6 @@ const App = () => {
           <Login path="/" />
           <Register path="/register" />
           <Dashboard path="/user/:id" />
-          <Board path="/user/:id/:boardId" />
         </Router>
       </UserContext.Provider>
     </>
